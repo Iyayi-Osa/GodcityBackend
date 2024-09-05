@@ -1,0 +1,27 @@
+service: gocitybe
+frameworkVersion: "3"
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  memorySize: 2048
+  stage: dev
+  profile: easynet
+  timeout: 15
+  region: us-east-1
+
+functions:
+  hello:
+    handler: start.handler
+    timeout: 30
+    events:
+      - http: ANY /
+      - http: 'ANY /{proxy+}'
+    environment:
+      PORT: 3002
+      MONGO_URI: mongodb+srv://qosbot:qosbot@microsrv.j8ond.mongodb.net/Godcity?retryWrites=true&w=majority
+      JWT_SECRET: 3B+oaWON3YbYzBi9gXn+4d+q
+      
+
+plugins:
+  - serverless-dotenv-plugin
